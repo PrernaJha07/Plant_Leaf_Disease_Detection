@@ -1,0 +1,23 @@
+# Virtual environment
+venv/
+.env
+
+# Dataset folders
+dataset/
+split_dataset/
+
+# Uploads or temporary files
+ml/uploads/
+static/uploads/
+
+# Ignore model if you want (optional)
+ml/model.h5
+
+# Utility scripts you don't want to push
+split_dataset.py
+resize_no_plant.py
+print_classes.py
+
+# Python cache files
+__pycache__/
+*.pyc

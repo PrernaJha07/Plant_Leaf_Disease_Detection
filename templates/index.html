@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plant Disease Detection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #fcfcfc;
+        }
+        header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #fcfcfc;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        header p {
+            font-size: 1.1rem;
+            margin-top: 0.4rem;
+            color: #fcfcfc;
+        }
+        #loader {
+    display: none;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 0.8s linear infinite;
+    margin: auto;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+        form {
+            background: #84d05b;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+        input[type=file] {
+            margin: 1rem 0 1.5rem 0;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #219150;
+        }
+        .result {
+            margin-top: 2rem;
+            background: #fff;
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+            max-width: 420px;
+            width: 100%;
+            text-align: left;
+            color: #2c3e50;
+        }
+        .result h2 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: #16a085;
+        }
+        .result p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin: 0.6rem 0;
+        }
+        nav {
+            width: 100%;
+            max-width: 420px;
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+        nav a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: auto;
+            padding: 1rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="background: url('/static/bg.jpg') no-repeat center center fixed; background-size: cover;"></body>
+    <nav>
+        Welcome, <strong>{{ username }}</strong> | <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+    <header>
+        <h1>Plant Disease Detection</h1>
+        <p>Upload an image of a plant leaf and get disease detection along with cure measures.</p>
+    </header>
+  <div id="loader">
+  <div class="spinner"></div>
+  <p>Processing...</p>
+</div>
+    <form method="POST" action="{{ url_for('index') }}" enctype="multipart/form-data">
+        <input type="file" name="leaf" accept="image/*" required />
+        <br />
+        <button type="submit">Proceed</button>
+    </form>
+
+    <!-- {% if prediction %}
+    <div class="result">
+        <h2>Prediction: {{ prediction }}</h2>
+        <p><strong>Cure & Suggestions:</strong> {{ cure }}</p>
+    </div>
+    {% endif %} -->
+    {% if prediction %}
+    <h3>Predicted Class: {{ prediction }}</h3>
+    <p><strong>Cure:</strong> {{ cure }}</p>
+    <img src="{{ url_for('static', filename='uploads/' + filename) }}" width="200">
+{% endif %}
+
+<script>
+  const form = document.querySelector("form");
+  const loader = document.getElementById("loader");
+
+  form.addEventListener("submit", () => {
+    loader.style.display = "block";
+  });
+</script>
+    <footer>
+        &copy; 2025 Plant Disease Detection | Developed with ❤️
+    </footer>
+</body>
+</html>
